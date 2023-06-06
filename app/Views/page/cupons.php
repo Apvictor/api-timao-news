@@ -1,0 +1,154 @@
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('template') ?>
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="card">
+      <div class="card-header">
+        <form action="<?= base_url("admin/cupons") ?>" method="get" class="form form-inline">
+          <div class="d-flex flex-md-row flex-column justify-content-between w-100">
+            <div class="d-flex flex-md-row flex-column w-100 mb-md-0 mb-1" style="gap: 5px;">
+              <input type="search" name="search" placeholder="Pesquisar" class="form-control" value="<?= $search ?>">
+              <button type="submit" class="btn btn-dark">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </div>
+            <button type="button" class="btn btn-dark" title="Adicionar" data-toggle="modal" data-target="#modalAdd">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Código</th>
+              <th>Desconto</th>
+              <th>Status</th>
+              <th width="150">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($cupons as $item) : ?>
+              <tr>
+                <td><?= $item["id"] ?></td>
+                <td><?= $item["nome"] ?></td>
+                <td>
+                  <span class="badge badge-primary">
+                    <?= $item["codigo"] ?>
+                  </span>
+                </td>
+                <td>
+                  <?= format_money($item["desconto"]) ?>
+                </td>
+                <td>
+                  <a href="<?= base_url("admin/cupons/" . $item["id"] . "/status") ?>">
+                    <span class="badge badge-<?= $item["status"] == ATIVO ? "success" : "danger" ?>">
+                      <?= $item["status"] == ATIVO ? "ATIVO" : "INATIVO" ?>
+                    </span>
+                  </a>
+                </td>
+                <td style="width: 10px;">
+                  <button type="button" class="btn btn-info" title="Editar" data-toggle="modal" data-target="#modalEdit-<?= $item["id"] ?>">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Modal ADD -->
+<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adicionar categoria</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="formAdd" action="<?= base_url("admin/cupons/cadastrar") ?>" method="POST">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="nome">Nome <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do cupom">
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="codigo">Código <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código do cupom">
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="desconto">Desconto <span class="text-danger">*</span></label>
+            <input type="text" class="form-control money" name="desconto" id="desconto" placeholder="Valor do desconto">
+            <div class="invalid-feedback"></div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal EDIT -->
+<?php foreach ($cupons as $item) : ?>
+  <div class="modal fade" id="modalEdit-<?= $item["id"] ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar categoria</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="formEdit" action="<?= base_url("admin/cupons/" . $item["id"] . "/editar") ?>" method="post">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="nome">Nome <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="nome" id="nome_edit" value="<?= $item["nome"] ?>" placeholder="Nome do cupom" required>
+            </div>
+
+            <div class="form-group">
+              <label for="codigo">Código <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="codigo" id="codigo_edit" placeholder="Código do cupom" value="<?= $item["codigo"] ?>">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="desconto">Desconto <span class="text-danger">*</span></label>
+              <input type="text" class="form-control money" name="desconto" id="desconto_edit" placeholder="Valor do desconto" value="<?= $item["desconto"] ?>">
+              <div class="invalid-feedback"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" id="btnEditCategoria" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<?php endforeach; ?>
+
+<?= $this->endSection() ?>
