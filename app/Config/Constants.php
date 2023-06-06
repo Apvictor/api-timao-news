@@ -93,46 +93,12 @@ define('EVENT_PRIORITY_NORMAL', 100);
  */
 define('EVENT_PRIORITY_HIGH', 10);
 
-
-// TOASTS
-defined('TOAST_INFO') || define('TOAST_INFO', 'toast-info');
-defined('TOAST_ERROR') || define('TOAST_ERROR', 'toast-error');
-defined('TOAST_WARNING') || define('TOAST_WARNING', 'toast-warning');
-defined('TOAST_SUCCESS') || define('TOAST_SUCCESS', 'toast-success');
-
-// STATUS
-defined('ATIVO') || define('ATIVO', 'A');
-defined('INATIVO') || define('INATIVO', 'I');
-
-// FORMAS DE PAGAMENTOS
-defined('CARTAO_ONLINE') || define('CARTAO_ONLINE', '1');
-defined('PIX') || define('PIX', '2');
-defined('DINHEIRO') || define('DINHEIRO', '3');
-defined('CARTAO_ENTREGA') || define('CARTAO_ENTREGA', '4');
+// CAMPEONATOS
+defined('PAULISTA') || define('PAULISTA', 104);
+defined('BRASILEIRO') || define('BRASILEIRO', 30);
+defined('LIBERTADORES') || define('LIBERTADORES', 82);
+defined('COPA_DO_BRASIL') || define('COPA_DO_BRASIL', 48);
 
 
-// STATUS PEDIDOS
-defined('PENDENTE') || define('PENDENTE', 'P');
-defined('ENTREGA') || define('ENTREGA', 'E');
-defined('RECEBIDO') || define('RECEBIDO', 'R');
-defined('FALHA') || define('FALHA', 'F');
-defined('TESTE') || define('TESTE', 'T');
-
-// STATUS PAGAMENTOS
-defined('PAGO') || define('PAGO', 'paid');
-defined('PAGO_MESSAGE') || define('PAGO_MESSAGE', 'Transação paga. Foi autorizada e capturada com sucesso. Para Boleto, significa que nossa API já identificou o pagamento de seu cliente.');
-
-defined('RECUSOU') || define('RECUSOU', 'refused');
-defined('RECUSOU_MESSAGE') || define('RECUSOU_MESSAGE', 'Transação recusada, não autorizada.');
-
-defined('ESTORNADA') || define('ESTORNADA', 'refunded');
-defined('ESTORNADA_MESSAGE') || define('ESTORNADA_MESSAGE', 'Transação estornada completamente.');
-
-defined('AUTORIZADA') || define('AUTORIZADA', 'authorized');
-defined('AUTORIZADA_MESSAGE') || define('AUTORIZADA_MESSAGE', 'Transação foi autorizada. Cliente possui saldo na conta e este valor foi reservado para futura captura, que deve acontecer em até 5 dias para transações criadas com api_key. Caso não seja capturada, a autorização é cancelada automaticamente pelo banco emissor, e o status dela permanece como authorized.');
-
-defined('PROCESSANDO') || define('PROCESSANDO', 'processing');
-defined('PROCESSANDO_MESSAGE') || define('PROCESSANDO_MESSAGE', 'Transação está em processo de autorização.');
-
-defined('REVISAO_PENDENTE') || define('REVISAO_PENDENTE', 'pending_review');
-defined('REVISAO_PENDENTE_MESSAGE') || define('REVISAO_PENDENTE_MESSAGE', 'Transação pendente de revisão manual por parte do lojista. Uma transação ficará com esse status por até 48 horas corridas.');
+defined('MSG_UPDATE') || define('MSG_UPDATE', "Sucesso ao atualizar!");
+defined('MSG_INSERT') || define('MSG_INSERT', "Sucesso ao salvar!");
