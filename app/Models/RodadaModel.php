@@ -27,7 +27,7 @@ class RodadaModel extends Model
       $this->where("(time1 = " . $equipeId . " or " . "time2 = " . $equipeId . ")");
     }
 
-    
+
     if ($proximosJogos) {
       $this->where("data >=", date("Y-m-d"));
     }
@@ -53,9 +53,41 @@ class RodadaModel extends Model
   {
     $dados = (array) $params;
 
-    $existeRodada = $this->where(["id" => $dados["rodada"], 'campeonato_id' => $campeonato, 'temporada' => $temporada, 'time1' => $dados["time1"], 'time2' => $dados["time2"]])->first();
+    $existeRodada = $this->where([
+      'campeonato_id' => $campeonato,
+      'temporada' => $temporada,
+      'time1' => $dados["time1"],
+      'time2' => $dados["time2"]
+    ])->first();
 
-    if (!$existeRodada) {
+
+    if ($existeRodada) {
+      $this->where([
+        'campeonato_id' => $campeonato,
+        'temporada' => $temporada,
+        'time1' => $dados["time1"],
+        'time2' => $dados["time2"]
+      ])->save(
+        [
+          'id' => $existeRodada["id"],
+          'campeonato_id' => $campeonato,
+          'temporada' => $temporada,
+          'time1' => $dados["time1"],
+          'time2' => $dados["time2"],
+          'nome' => $dados["nome"],
+          'placar1' => $dados["placar1"],
+          'placar2' => $dados["placar2"],
+          'penalti1' => $dados["penalti1"],
+          'penalti2' => $dados["penalti2"],
+          'data' => $dados["data"],
+          'horario' => $dados["horario"],
+          'estadio' => $dados["estadio"],
+          'local' => $dados["local"],
+        ]
+      );
+
+      return ["message" => MSG_UPDATE];
+    } else {
       $this->insert(
         [
           'id' => $dados["rodada"],
@@ -74,35 +106,7 @@ class RodadaModel extends Model
           'local' => $dados["local"],
         ]
       );
-
       return ["message" => MSG_INSERT];
-    } else {
-      $this->where([
-        'id' => $dados["rodada"],
-        'campeonato_id' => $campeonato,
-        'temporada' => $temporada,
-        'time1' => $dados["time1"],
-        'time2' => $dados["time2"]
-      ])->save(
-        [
-          'id' => $dados["rodada"],
-          'campeonato_id' => $campeonato,
-          'temporada' => $temporada,
-          'time1' => $dados["time1"],
-          'time2' => $dados["time2"],
-          'nome' => $dados["nome"],
-          'placar1' => $dados["placar1"],
-          'placar2' => $dados["placar2"],
-          'penalti1' => $dados["penalti1"],
-          'penalti2' => $dados["penalti2"],
-          'data' => $dados["data"],
-          'horario' => $dados["horario"],
-          'estadio' => $dados["estadio"],
-          'local' => $dados["local"],
-        ]
-      );
-
-      return ["message" => MSG_UPDATE];
     }
   }
 }
