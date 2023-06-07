@@ -10,6 +10,38 @@ class CampeonatoModel extends Model
   protected $primaryKey = 'id';
   protected $allowedFields = ['id', 'nome_completo', 'nome_comum', 'temporada'];
 
+  public function getCampeonatos()
+  {
+    return $this
+      ->select("id, nome_comum")
+      ->groupBy("id")
+      ->findAll();
+  }
+
+  public function getTemporadas()
+  {
+    $resultado = $this
+      ->select("temporada")
+      ->groupBy("temporada")
+      ->orderBy("temporada", "DESC")
+      ->findAll();
+
+    $data = [];
+    for ($i = 0; $i < count($resultado); $i++) {
+      $data[$i]["nome_comum"] = $resultado[$i]["temporada"];
+    }
+
+    return $data;
+  }
+
+  public function getCampeonatoId($campeonato, $temporada = null)
+  {
+    return $this->where([
+      "id" => $campeonato,
+      "temporada" => $temporada ? $temporada : date("Y-m-d")
+    ])->first();
+  }
+
   public function add($params)
   {
     $dados = (array) $params;

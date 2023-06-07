@@ -16,7 +16,7 @@ class EquipeModel extends Model
       ->select('id, nome, nome_comum, sigla, brasao')
       ->find($equipe);
   }
-  
+
   public function getEquipe($equipe)
   {
     return $this
@@ -24,6 +24,19 @@ class EquipeModel extends Model
       ->like("nome", $equipe)
       ->like("nome_comum", $equipe)
       ->first();
+  }
+
+  public function getEquipes()
+  {
+    return $this
+      ->select('id, nome, nome_comum, sigla, brasao')
+      ->where([
+        "sigla <>" => null,
+        "tipo <>" => "coringa",
+        "brasao <>" => "/40x40/.png"
+      ])
+      ->orderBy("nome_comum")
+      ->findAll();
   }
 
   public function add($params)

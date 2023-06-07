@@ -2,10 +2,7 @@
 
 namespace Config;
 
-use App\Controllers\BrasileiroController;
-use App\Controllers\CopaDoBrasilController;
-use App\Controllers\LibertadoresController;
-use App\Controllers\PaulistaController;
+use App\Controllers\CampeonatoController;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -32,13 +29,11 @@ $routes->set404Override();
  * Routes API
  * --------------------------------------------------------------------
  */
-$routes->group('api', function ($routes) {
-    $routes->group('campeonato', function ($routes) {
-        $routes->get('brasileiro', [BrasileiroController::class, "index"]);
-        $routes->get('copa-do-brasil', [CopaDoBrasilController::class, "index"]);
-        $routes->get('libertadores', [LibertadoresController::class, "index"]);
-        $routes->get('paulista', [PaulistaController::class, "index"]);
-    });
+$routes->group('api', ['filter' => 'cors'], function ($routes) {
+    $routes->get('equipes', [CampeonatoController::class, "equipes"]);
+    $routes->get('rodadas', [CampeonatoController::class, "rodadas"]);
+    $routes->get('campeonatos', [CampeonatoController::class, "campeonatos"]);
+    $routes->get('temporadas', [CampeonatoController::class, "temporadas"]);
 });
 
 /*

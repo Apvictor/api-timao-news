@@ -31,18 +31,6 @@ class BrasileiroController extends ResourceController
         $this->campeonato = BRASILEIRO;
     }
 
-    public function index()
-    {
-        $temporada = $this->request->getVar("temporada");
-        $equipe = $this->request->getVar("equipe");
-
-        $this->sincronizar($temporada);
-
-        $dados = $this->rodadaModel->getRodadasCampeonato($this->campeonato, $temporada, $equipe);
-
-        return $this->respond($dados);
-    }
-
     public function sincronizar($temporada)
     {
         try {

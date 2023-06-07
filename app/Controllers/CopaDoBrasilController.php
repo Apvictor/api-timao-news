@@ -31,18 +31,16 @@ class CopaDoBrasilController extends ResourceController
         $this->campeonato = COPA_DO_BRASIL;
     }
 
-    public function index()
+    public function sincronizar($temporada)
     {
         try {
-            $temporada = $this->request->getVar("temporada");
-
             $dados = $this->cadastrarCampeonato($temporada);
 
             $dados = $this->cadastrarEquipes($temporada);
 
             $dados = $this->cadastrarRodadas($temporada);
 
-            return $this->respond($dados);
+            return $dados;
         } catch (Exception $e) {
             throw $e;
         }
