@@ -34,8 +34,9 @@ class RodadaModel extends Model
 
     $resultado = $this
       ->where("data <>", null)
-      ->orderBy("data")
-      ->orderBy("horario")
+      ->where("data <=", date("Y-m-d"))
+      ->orderBy("data", "DESC")
+      ->orderBy("horario", "DESC")
       ->orderBy("id")
       ->findAll();
 

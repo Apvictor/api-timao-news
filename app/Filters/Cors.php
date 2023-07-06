@@ -19,7 +19,8 @@ class Cors implements FilterInterface
     }
 
     $allowed_domains = array(
-      'http://localhost:19006'
+      'http://localhost:19006',
+      "http://127.0.0.1:5173"
     );
 
     if (in_array($origin, $allowed_domains)) {
